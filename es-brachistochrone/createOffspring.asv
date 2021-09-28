@@ -1,0 +1,19 @@
+% funkcja ta dokonuje mutacji chromosomu 
+function offspring = createOffspring(chromosome, mutation, ro)
+offspring = chromosome;
+
+if (strcmp('gauss'))
+    
+else
+    for locus =1:length(chromosome)
+        gen = chromosome(locus);
+        val = rand;
+        val = val * 2 -1;
+        gen = gen + val;
+        offspring(locus) = gen; 
+    end
+end
+
+
+
+ 

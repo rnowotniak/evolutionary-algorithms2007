@@ -1,0 +1,59 @@
+function drawCykloid(pointA, pointB)
+
+plot([pointA(1,1),pointB(1,1)],[pointA(2,1),pointB(2,1)],'ro')
+
+%wyznaczenie promienia
+road = (pointA(1,1) - pointB(1,1))*(pointA(1,1) - pointB(1,1)) + (pointA(2,1) - pointB(2,1))*(pointA(2,1) - pointB(2,1));
+road = sqrt(road);
+
+%r = (pointB(1,1)-pointA(1,1)) / pi;
+r = 5;
+% obliczenie podstawowej cykloidy
+t = [0:1:360];
+t = pi * t / 180;
+sint = sin(t);
+cost = cos(t);
+x = r * (t - sint);
+y = r * (1 - cost);
+
+% przesuniecie podstawowej brachistochrony
+% tak aby jej prawy skrajny punkt odpowiadal punktowi B
+% podanemu przez uzytkownika
+minx = min (x);
+if (minx > pointA(1,1))
+    x = x - (minx - pointA(1,1));
+else
+    x = x + (pointA(1,1) - minx);
+end;
+y = y + pointA(2,1);
+
+% odbicie symetryczne wzdloz osi poziomej w pionie
+yos = pointA(2,1); 
+for i = 1:length(y)
+   y(i) = 2 * yos - y(i); 
+end
+
+% obliczenie punktu przeciecia podstawowej cykloidy
+
+xa = pointA(1,1);
+ya = pointA(2,1);
+xb = pointB(1,1);
+yb = pointB(2,1);
+
+a = (yb - ya) / (xb - xa);
+b = ya - a * xa;
+yf = [];
+for i = 1:length(x)
+    val = a * x(i) + b;
+    yf = [yf,val];
+end
+index = ;
+for i = 2:length(y)
+   if abs (y(i) - yf(i)) <= 0.01 
+       index = i;
+   end
+end
+index
+%plot (x,yf,'y')
+
+plot (x,y)
